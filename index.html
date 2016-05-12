@@ -1,17 +1,58 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <style>
-            
-        </style>
-    </head>
-    <body>
-        <canvas id="c">
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Test</title>
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0px;
+            overflow: hidden;
+        }
+        #hint {
+            position: fixed;
+            color: white;
+            text-align: center;
+            width: 200px;
+            height: 40px;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            font-family: "Courier New", Courier, monospace;
+            opacity:0.8;
+            border: 1px solid white;
+            line-height:40px;
+            transform-origin: center center 0px;
+            transition: all 0.2s ease 0s;
+            -webkit-transform-origin: center center 0px;
+            -webkit-transition: all 0.2s ease 0s;
+            transform: matrix3d(1,0,0.00,0,0.00,1,0.00,-0.0005,0,0,1,0,0,0,0,1);
+            -webkit-transform: matrix3d(1,0,0.00,0,0.00,1,0.00,-0.0005,0,0,1,0,0,0,0,1);
+        }
+        #track{
+            position: fixed;
+            color: white;
+            text-align: right;
+            width: 30%;
+            height: 30px;
+            bottom: 30px;
+            right: 40px;
+            font-family: "Courier New", Courier, monospace;
+            opacity:0.7;
+            font-size: 11px;
+            line-height:30px;
+        }
+    </style>
+</head>
+<body>
 
-        </canvas>
-        <audio id="a" src=""></audio>
-        <script src="assets/js/three.min.js"></script>
-        <script src="assets/js/main.js"></script>
-    </body>
+<div id="hint">space to pause</div>
+<div id="track">Track : <span id="track-title">Strunk - Die Antwoord</span></div>
+<script src="assets/js/three.min.js"></script>
+<script src="assets/js/renderers/Projector.js"></script>
+<script src="assets/js/renderers/CanvasRenderer.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
 </html>
