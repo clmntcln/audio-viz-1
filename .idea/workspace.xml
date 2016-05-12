@@ -2,14 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee838957-0953-407f-9ea6-b70ba2e19a13" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/libs/stats.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/renderers/CanvasRenderer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/renderers/Projector.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/av2.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/av3.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/audio-viz-1.iml" afterPath="$PROJECT_DIR$/.idea/audio-viz-1.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/js/main.js" afterPath="$PROJECT_DIR$/assets/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
@@ -38,8 +30,8 @@
           <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="666">
-                  <caret line="51" column="68" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="68" />
+                <state relative-caret-position="496">
+                  <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
                   <folding />
                 </state>
               </provider>
@@ -77,13 +69,13 @@
           <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/assets/js/main.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="386">
-                  <caret line="203" column="47" selection-start-line="203" selection-start-column="47" selection-end-line="203" selection-end-column="47" />
+                <state relative-caret-position="537">
+                  <caret line="229" column="61" selection-start-line="229" selection-start-column="61" selection-end-line="229" selection-end-column="61" />
                   <folding>
-                    <element signature="e#4455#4727#0" expanded="false" />
-                    <element signature="e#4777#4877#0" expanded="false" />
-                    <element signature="e#4920#5136#0" expanded="false" />
-                    <element signature="e#5178#5395#0" expanded="false" />
+                    <element signature="e#4511#4783#0" expanded="false" />
+                    <element signature="e#4833#4933#0" expanded="false" />
+                    <element signature="e#4976#5192#0" expanded="false" />
+                    <element signature="e#5234#5451#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -105,8 +97,8 @@
         <option value="$PROJECT_DIR$/assets/js/libs/stats.min.js" />
         <option value="$PROJECT_DIR$/av2.html" />
         <option value="$PROJECT_DIR$/av3.html" />
-        <option value="$PROJECT_DIR$/assets/js/main.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/assets/js/main.js" />
       </list>
     </option>
   </component>
@@ -316,12 +308,12 @@
       <option name="presentableId" value="Default" />
       <updated>1462956680875</updated>
       <workItem from="1462956682005" duration="20978000" />
-      <workItem from="1463037849640" duration="5701000" />
+      <workItem from="1463037849640" duration="6176000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26679000" />
+    <option name="totallyTimeSpent" value="27154000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -396,10 +388,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4455#4727#0" expanded="false" />
-            <element signature="e#4777#4877#0" expanded="false" />
-            <element signature="e#4920#5136#0" expanded="false" />
-            <element signature="e#5178#5395#0" expanded="false" />
+            <element signature="e#4511#4783#0" expanded="false" />
+            <element signature="e#4833#4933#0" expanded="false" />
+            <element signature="e#4976#5192#0" expanded="false" />
+            <element signature="e#5234#5451#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -480,24 +472,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/main.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="203" column="47" selection-start-line="203" selection-start-column="47" selection-end-line="203" selection-end-column="47" />
-          <folding>
-            <element signature="e#4455#4727#0" expanded="false" />
-            <element signature="e#4777#4877#0" expanded="false" />
-            <element signature="e#4920#5136#0" expanded="false" />
-            <element signature="e#5178#5395#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="496">
+          <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/assets/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="51" column="68" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="68" />
-          <folding />
+        <state relative-caret-position="537">
+          <caret line="229" column="61" selection-start-line="229" selection-start-column="61" selection-end-line="229" selection-end-column="61" />
+          <folding>
+            <element signature="e#4511#4783#0" expanded="false" />
+            <element signature="e#4833#4933#0" expanded="false" />
+            <element signature="e#4976#5192#0" expanded="false" />
+            <element signature="e#5234#5451#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

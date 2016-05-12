@@ -44,12 +44,26 @@
             font-size: 11px;
             line-height:30px;
         }
+        #progressBar{
+            position:fixed;
+            width:100%;
+            height:5px;
+            bottom:0;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        #progress{
+            position: absolute;
+            left:0;
+            height:100%;
+            background: rgba(255, 255, 255, 1);
+        }
     </style>
 </head>
 <body>
 
 <div id="hint">space to pause</div>
 <div id="track">Track : <span id="track-title">Strunk - Die Antwoord</span></div>
+<div id="progressBar"><div id="progress"></div></div>
 <script src="assets/js/three.min.js"></script>
 <script src="assets/js/renderers/Projector.js"></script>
 <script src="assets/js/renderers/CanvasRenderer.js"></script>

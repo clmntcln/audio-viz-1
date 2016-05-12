@@ -27,7 +27,8 @@ onload = function update() {
     const particles = [];
     const particlesMirror = [];
 
-    let hint = document.getElementById('hint');
+    let hint = document.getElementById('hint'),
+        progress = document.getElementById('progress');
 
     function init() {
 
@@ -225,6 +226,11 @@ onload = function update() {
             particlesMirror[i].position.setLength((dataArray[i] * 2) + 300);
 
         });
+
+        let prog = (audio.currentTime / audio.duration) * 100;
+        console.log(prog);
+
+        progress.style.width = prog + "%";
 
         //sphere.geometry.parameters.radius = (dataArray[1] * 3) + 350;
         //console.log(dataArray);
