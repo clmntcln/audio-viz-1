@@ -54,23 +54,18 @@ onload = function update() {
         //Start Particles
         var PI2 = Math.PI * 2;
         var material = new THREE.SpriteMaterial({
-            color: 0xffffff,
-            program: function (context) {
-                context.beginPath();
-                context.arc(0, 0, 0.5, 0, PI2, true);
-                context.fill();
-            }
+            color: 0xffffff
         });
 
         for (var i = 0; i < 1200; i++) {
 
             let particle = new THREE.Sprite(material);
-            particle.position.x = Math.random() - 1;
+            particle.position.x = 1;
             particle.position.y = Math.random() * 2 - 1;
             particle.position.z = Math.random() * 2 - 1;
             particle.position.normalize();
-            particle.position.setLength(100);
-            particle.position.x = particle.position.x - 20;
+            particle.position.setLength(400);
+            particle.position.x = particle.position.x - 70;
             particle.scale.multiplyScalar(4);
 
             particles.push(particle);
@@ -202,6 +197,19 @@ onload = function update() {
         }
     };
 
+    hint.onclick = function(e) {
+        e.preventDefault();
+        if(paused) {
+            paused = false;
+            audio.play();
+            hint.innerHTML = "space to pause";
+        } else {
+            paused = true;
+            audio.pause();
+            hint.innerHTML = "space to play";
+        }
+    };
+
 
     const update = function () {
         requestAnimationFrame(update);
@@ -217,8 +225,8 @@ onload = function update() {
 
         particles.forEach(function (p, i){
 
-            p.position.setLength((dataArray[i] * 2) + 300);
-            particlesMirror[i].position.setLength((dataArray[i] * 2) + 300);
+            p.position.setLength((dataArray[i] * 2) + 500);
+            particlesMirror[i].position.setLength((dataArray[i] * 2) + 500);
 
         });
 
@@ -227,10 +235,12 @@ onload = function update() {
         progress.style.width = prog + "%";
 
         updateCamera();
-        composer.render();
+        //composer.render();
     };
 
     const updateCamera = function(){
+        camera.position.x = scene.position.x + 2000 * Math.cos(.3 * audio.currentTime );
+        camera.position.z = scene.position.z + 2000 * Math.sin(.3 * audio.currentTime );
         camera.position.x += ( mouseX - camera.position.x ) * .05;
         camera.position.y += ( -mouseY + 200 - camera.position.y ) * .05;
         camera.lookAt(scene.position);
