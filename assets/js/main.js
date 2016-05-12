@@ -104,7 +104,7 @@ onload = function update() {
             rings = 16;
 
         sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
-        console.log(sphere.geometry);
+        
         scene.add(sphere);
 
         //Light
@@ -228,12 +228,8 @@ onload = function update() {
         });
 
         let prog = (audio.currentTime / audio.duration) * 100;
-        console.log(prog);
 
         progress.style.width = prog + "%";
-
-        //sphere.geometry.parameters.radius = (dataArray[1] * 3) + 350;
-        //console.log(dataArray);
 
         updateCamera();
     };
