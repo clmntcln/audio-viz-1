@@ -10,11 +10,11 @@ onload = function update() {
 
         audioSource, audioAnalyser, bufferLength, audioContext, dataArray,
 
-        camera, scene, renderer;
+        camera, scene, renderer, composer;
 
 
     let audio = new Audio();
-    audio.src = 'assets/audio/strunk.mp3';
+    audio.src = 'assets/audio/Radiohead - Burn The Witch.mp3';
     audio.controls = true;
     audio.loop = true;
     audio.autoplay = true;
@@ -45,24 +45,15 @@ onload = function update() {
 
         scene = new THREE.Scene();
 
-        renderer = new THREE.CanvasRenderer();
+        renderer = new THREE.WebGLRenderer();
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         renderer.setClearColor( 0xffffff, 0);
         container.appendChild(renderer.domElement);
 
-        var geometry = new THREE.PlaneBufferGeometry( 200, 3000 );
-        geometry.rotateX( - Math.PI / 2 );
-        var materialPlane = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, overdraw: true } );
-        plane = new THREE.Mesh( geometry, materialPlane );
-        plane.position.y = -600;
-        plane.position.z = -100;
-        //scene.add(plane);
-
-
         //Start Particles
         var PI2 = Math.PI * 2;
-        var material = new THREE.SpriteCanvasMaterial({
+        var material = new THREE.SpriteMaterial({
             color: 0xffffff,
             program: function (context) {
                 context.beginPath();
@@ -71,52 +62,55 @@ onload = function update() {
             }
         });
 
-        for (var i = 0; i < 1000; i++) {
+        for (var i = 0; i < 1200; i++) {
 
             let particle = new THREE.Sprite(material);
             particle.position.x = Math.random() - 1;
             particle.position.y = Math.random() * 2 - 1;
             particle.position.z = Math.random() * 2 - 1;
             particle.position.normalize();
-            particle.position.multiplyScalar(100);
+            particle.position.setLength(100);
             particle.position.x = particle.position.x - 20;
             particle.scale.multiplyScalar(4);
+
+            particles.push(particle);
+            scene.add(particle);
 
             let particleMirrored = particle.clone();
             particleMirrored.position.negate();
             particleMirrored.position.y = particleMirrored.position.y * (-1);
             particleMirrored.position.z = particleMirrored.position.z * (-1);
 
-            particles.push(particle);
             particlesMirror.push(particleMirrored);
 
-            scene.add(particle);
             scene.add(particleMirrored);
 
         }
         //End Particles
 
-        let sphereMaterial =
-            new THREE.MeshLambertMaterial({color: 0x000000, overdraw: true});
+        let sphereMaterial = new THREE.MeshLambertMaterial({color: 0x000000, overdraw: true});
 
         let radius = 350,
             segments = 16,
             rings = 16;
 
         sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
-        
+
         scene.add(sphere);
 
-        //Light
-        var pointLight =
-            new THREE.PointLight(0x555555);
+        composer = new THREE.EffectComposer( renderer );
+        composer.addPass( new THREE.RenderPass( scene, camera ) );
 
-        pointLight.position.x = 10;
-        pointLight.position.y = -350;
-        pointLight.position.z = 130;
+        var effect = new THREE.ShaderPass( THREE.DotScreenShader );
+        effect.uniforms[ 'scale' ].value = 4;
+        //composer.addPass( effect );
 
-        //scene.add(pointLight);
+        var effect = new THREE.ShaderPass( THREE.RGBShiftShader );
+        effect.uniforms[ 'amount' ].value = 0.0015;
+        effect.renderToScreen = true;
+        //composer.addPass( effect );
 
+        console.log(composer);
 
         document.addEventListener('mousemove', onDocumentMouseMove, false);
         document.addEventListener('touchstart', onDocumentTouchStart, false);
@@ -155,6 +149,7 @@ onload = function update() {
         camera.updateProjectionMatrix();
 
         renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize( window.innerWidth, window.innerHeight );
 
     }
 
@@ -232,6 +227,7 @@ onload = function update() {
         progress.style.width = prog + "%";
 
         updateCamera();
+        composer.render();
     };
 
     const updateCamera = function(){

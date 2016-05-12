@@ -62,11 +62,20 @@
 <body>
 
 <div id="hint">space to pause</div>
-<div id="track">Track : <span id="track-title">Strunk - Die Antwoord</span></div>
+<div id="track">Track : <span id="track-title">Radiohead - Burn the witch</span></div>
 <div id="progressBar"><div id="progress"></div></div>
+
 <script src="assets/js/three.min.js"></script>
-<script src="assets/js/renderers/Projector.js"></script>
-<script src="assets/js/renderers/CanvasRenderer.js"></script>
+
+<script src="assets/js/shaders/CopyShader.js"></script>
+<script src="assets/js/shaders/DotScreenShader.js"></script>
+<script src="assets/js/shaders/RGBShiftShader.js"></script>
+
+<script src="assets/js/postprocessing/EffectComposer.js"></script>
+<script src="assets/js/postprocessing/RenderPass.js"></script>
+<script src="assets/js/postprocessing/MaskPass.js"></script>
+<script src="assets/js/postprocessing/ShaderPass.js"></script>
+
 <script src="assets/js/main.js"></script>
 </body>
 </html>
