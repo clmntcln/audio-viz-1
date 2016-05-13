@@ -1,38 +1,52 @@
-onload = function update() {
+const vizualiser = function() {
 
-    let SCREEN_WIDTH = window.innerWidth,
-        SCREEN_HEIGHT = window.innerHeight,
+    this.length = 400;
 
-        mouseX = 0, mouseY = 0,
+    this.SCREEN_WIDTH = window.innerWidth;
+    this.SCREEN_HEIGHT = window.innerHeight;
 
-        windowHalfX = window.innerWidth / 2,
-        windowHalfY = window.innerHeight / 2,
+    this.mouseX = 0;
+    this.mouseY = 0;
 
-        audioSource, audioAnalyser, bufferLength, audioContext, dataArray,
+    this.windowHalfX = window.innerWidth / 2;
+    this.windowHalfY = window.innerHeight / 2;
 
-        camera, scene, renderer, composer;
+    this.audioSource = null;
+    this.audioAnalyser = null;
+    this.bufferLength = null;
+    this.audioContext = null;
+    this.dataArray = null;
 
 
-    let audio = new Audio();
-    audio.src = 'assets/audio/Radiohead - Burn The Witch.mp3';
-    audio.controls = true;
-    audio.loop = true;
-    audio.autoplay = true;
+    this.camera = null;
+    this.scene = null;
+    this.renderer = null;
+    this.composer = null;
 
-    let paused = false;
 
-    //const audioPlayer = document.getElementById('audioPlayer');
+    this.audio = new Audio();
+    this.audio.src = 'assets/audio/Radiohead - Burn The Witch.mp3';
+    this.audio.controls = true;
+    this.audio.loop = true;
+    this.audio.autoplay = true;
 
-    let sphere;
-    const particles = [];
-    const particlesMirror = [];
+    this.paused = false;
 
-    let hint = document.getElementById('hint'),
-        progress = document.getElementById('progress');
 
-    function init() {
+    this.N_RING = 10;
+    this.intensity = 0.5;
 
-        initAudio();
+    this.sphere = null;
+    this.particles = [];
+    this.particlesMirror = [];
+
+    this.hint = document.getElementById('hint');
+    this.progress = document.getElementById('progress');
+
+
+    this.init = function() {
+
+        this.initAudio();
 
         let container;
 
@@ -40,16 +54,16 @@ onload = function update() {
 
         document.body.appendChild(container);
 
-        camera = new THREE.PerspectiveCamera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
-        camera.position.z = 2000;
+        this.camera = new THREE.PerspectiveCamera(75, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, 10000);
+        this.camera.position.z = 2000;
 
-        scene = new THREE.Scene();
+        this.scene = new THREE.Scene();
 
-        renderer = new THREE.WebGLRenderer();
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        renderer.setClearColor( 0xffffff, 0);
-        container.appendChild(renderer.domElement);
+        this.renderer = new THREE.WebGLRenderer();
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+        this.renderer.setClearColor( 0xffffff, 0);
+        container.appendChild(this.renderer.domElement);
 
         //Start Particles
         var PI2 = Math.PI * 2;
@@ -57,30 +71,16 @@ onload = function update() {
             color: 0xffffff
         });
 
-        for (var i = 0; i < 1200; i++) {
+        for(let i = 0; i < this.N_RING; i++){
+            let nParticles = 40 * (i + 1),
+                radius = 20 * (i + 1),
+                xDist = -500 / (i + 1);
 
-            let particle = new THREE.Sprite(material);
-            particle.position.x = 1;
-            particle.position.y = Math.random() * 2 - 1;
-            particle.position.z = Math.random() * 2 - 1;
-            particle.position.normalize();
-            particle.position.setLength(400);
-            particle.position.x = particle.position.x - 70;
-            particle.scale.multiplyScalar(4);
-
-            particles.push(particle);
-            scene.add(particle);
-
-            let particleMirrored = particle.clone();
-            particleMirrored.position.negate();
-            particleMirrored.position.y = particleMirrored.position.y * (-1);
-            particleMirrored.position.z = particleMirrored.position.z * (-1);
-
-            particlesMirror.push(particleMirrored);
-
-            scene.add(particleMirrored);
-
+            this.generateParticleRing(nParticles, radius, xDist, material);
         }
+
+        console.log(this.particles.length * 2);
+
         //End Particles
 
         let sphereMaterial = new THREE.MeshLambertMaterial({color: 0x000000, overdraw: true});
@@ -89,12 +89,12 @@ onload = function update() {
             segments = 16,
             rings = 16;
 
-        sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
+        this.sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
 
-        scene.add(sphere);
+        this.scene.add(this.sphere);
 
-        composer = new THREE.EffectComposer( renderer );
-        composer.addPass( new THREE.RenderPass( scene, camera ) );
+        this.composer = new THREE.EffectComposer( this.renderer );
+        this.composer.addPass( new THREE.RenderPass( this.scene, this.camera ) );
 
         var effect = new THREE.ShaderPass( THREE.DotScreenShader );
         effect.uniforms[ 'scale' ].value = 4;
@@ -105,149 +105,187 @@ onload = function update() {
         effect.renderToScreen = true;
         //composer.addPass( effect );
 
-        console.log(composer);
+        console.log(this.composer);
 
-        document.addEventListener('mousemove', onDocumentMouseMove, false);
-        document.addEventListener('touchstart', onDocumentTouchStart, false);
-        document.addEventListener('touchmove', onDocumentTouchMove, false);
+        document.addEventListener('mousemove', this.onDocumentMouseMove, false);
+        document.addEventListener('touchstart', this.onDocumentTouchStart, false);
+        document.addEventListener('touchmove', this.onDocumentTouchMove, false);
 
-        window.addEventListener('resize', onWindowResize, false);
+        window.addEventListener('resize', this.onWindowResize, false);
 
-        update();
+        this.update();
 
-    }
+    };
 
-    function initAudio(){
+    this.initAudio = function(){
 
         //window.AudioContext = window.AudioContext||window.webkitAudioContext;
-        audioContext = new webkitAudioContext();
+        this.audioContext = new webkitAudioContext();
 
-        audioAnalyser = audioContext.createAnalyser();
+        this.audioAnalyser = this.audioContext.createAnalyser();
 
-        audioAnalyser.fftSize = 2048;
-        bufferLength = audioAnalyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-        audioAnalyser.getByteTimeDomainData(dataArray);
+        this.audioAnalyser.fftSize = 4096;
+        this.bufferLength = this.audioAnalyser.frequencyBinCount;
+        this.dataArray = new Uint8Array(this.bufferLength);
+        this.audioAnalyser.getByteTimeDomainData(this.dataArray);
 
-        audioSource = audioContext.createMediaElementSource(audio);
-        audioSource.connect(audioAnalyser);
-        audioAnalyser.connect(audioContext.destination);
+        this.audioSource = this.audioContext.createMediaElementSource(this.audio);
+        this.audioSource.connect(this.audioAnalyser);
+        this.audioAnalyser.connect(this.audioContext.destination);
 
-    }
+    };
 
-    function onWindowResize() {
+    this.generateParticleRing = function(nParticles, radius, xDist, material){
+        for (let i = 0; i < nParticles; i++) {
 
-        windowHalfX = window.innerWidth / 2;
-        windowHalfY = window.innerHeight / 2;
+            let particle = new THREE.Sprite(material);
+            particle.position.x = xDist;
+            particle.position.y = (this.scene.position.y + radius * Math.cos(2 * Math.PI * i / nParticles));
+            particle.position.z = (this.scene.position.z + radius * Math.sin(2 * Math.PI * i / nParticles));
 
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+            particle.position.normalize();
+            particle.position.setLength(this.length);
+            particle.scale.multiplyScalar(4);
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        composer.setSize( window.innerWidth, window.innerHeight );
+            this.particles.push(particle);
+            this.scene.add(particle);
 
-    }
+            let particleMirrored = particle.clone();
+            particleMirrored.position.negate();
+            particleMirrored.position.y = particleMirrored.position.y * (-1);
+            particleMirrored.position.z = particleMirrored.position.z * (-1);
+
+            this.particlesMirror.push(particleMirrored);
+
+            this.scene.add(particleMirrored);
+
+        }
+    };
+
+    this.onWindowResize = function() {
+
+        this.windowHalfX = window.innerWidth / 2;
+        this.windowHalfY = window.innerHeight / 2;
+
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.composer.setSize( window.innerWidth, window.innerHeight );
+
+    };
 
     //
 
-    function onDocumentMouseMove(event) {
+    this.onDocumentMouseMove = function(event) {
 
-        mouseX = event.clientX - windowHalfX;
-        mouseY = event.clientY - windowHalfY;
-    }
+        this.mouseX = event.clientX - this.windowHalfX;
+        this.mouseY = event.clientY - this.windowHalfY;
+    };
 
-    function onDocumentTouchStart(event) {
+    this.onDocumentTouchStart = function(event) {
 
         if (event.touches.length > 1) {
 
             event.preventDefault();
 
-            mouseX = event.touches[0].pageX - windowHalfX;
-            mouseY = event.touches[0].pageY - windowHalfY;
+            this.mouseX = event.touches[0].pageX - this.windowHalfX;
+            this.mouseY = event.touches[0].pageY - this.windowHalfY;
 
         }
 
-    }
+    };
 
-    function onDocumentTouchMove(event) {
+    this.onDocumentTouchMove = function(event) {
 
         if (event.touches.length == 1) {
 
             event.preventDefault();
 
-            mouseX = event.touches[0].pageX - windowHalfX;
-            mouseY = event.touches[0].pageY - windowHalfY;
+            this.mouseX = event.touches[0].pageX - this.windowHalfX;
+            this.mouseY = event.touches[0].pageY - this.windowHalfY;
 
         }
 
-    }
+    };
 
     document.body.onkeydown = function(e) {
         if(e.keyCode == 32) {
             e.preventDefault();
-            if(paused) {
-                paused = false;
-                audio.play();
-                hint.innerHTML = "space to pause";
+            if(this.paused) {
+                this.paused = false;
+                this.audio.play();
+                this.hint.innerHTML = "space to pause";
             } else {
-                paused = true;
-                audio.pause();
-                hint.innerHTML = "space to play";
+                this.paused = true;
+                this.audio.pause();
+                this. hint.innerHTML = "space to play";
             }
         }
     };
 
-    hint.onclick = function(e) {
+    this.hint.onclick = function(e) {
         e.preventDefault();
-        if(paused) {
-            paused = false;
-            audio.play();
-            hint.innerHTML = "space to pause";
+        if(this.paused) {
+            this.paused = false;
+            this.audio.play();
+            this.hint.innerHTML = "space to pause";
         } else {
-            paused = true;
-            audio.pause();
-            hint.innerHTML = "space to play";
+            this.paused = true;
+            this.audio.pause();
+            this.hint.innerHTML = "space to play";
         }
     };
 
 
-    const update = function () {
-        requestAnimationFrame(update);
+    this.update = function () {
+        requestAnimationFrame(this.update.bind(this));
 
-        render();
+        this.render();
     };
 
 
-    const render = function () {
+    this.render = function () {
 
 
-        audioAnalyser.getByteTimeDomainData(dataArray);
+        this.audioAnalyser.getByteTimeDomainData(this.dataArray);
 
-        particles.forEach(function (p, i){
+        let _self = this;
 
-            p.position.setLength((dataArray[i] * 2) + 500);
-            particlesMirror[i].position.setLength((dataArray[i] * 2) + 500);
+        this.particles.forEach(function (p, i){
+
+            p.position.setLength((_self.dataArray[i] * _self.intensity) + _self.length);
+            _self.particlesMirror[i].position.setLength((_self.dataArray[i] * _self.intensity) + _self.length);
 
         });
 
-        let prog = (audio.currentTime / audio.duration) * 100;
+        let prog = (this.audio.currentTime / this.audio.duration) * 100;
 
-        progress.style.width = prog + "%";
+        this.progress.style.width = prog + "%";
 
-        updateCamera();
+        this.updateCamera();
         //composer.render();
     };
 
-    const updateCamera = function(){
-        camera.position.x = scene.position.x + 2000 * Math.cos(.3 * audio.currentTime );
-        camera.position.z = scene.position.z + 2000 * Math.sin(.3 * audio.currentTime );
-        camera.position.x += ( mouseX - camera.position.x ) * .05;
-        camera.position.y += ( -mouseY + 200 - camera.position.y ) * .05;
-        camera.lookAt(scene.position);
+    this.updateCamera = function(){
+        this.camera.position.x = this.scene.position.x + 2000 * Math.cos(.3 * this.audio.currentTime );
+        this.camera.position.z = this.scene.position.z + 2000 * Math.sin(.3 * this.audio.currentTime );
+        this.camera.position.x += ( this.mouseX - this.camera.position.x ) * .05;
+        this.camera.position.y += ( -this.mouseY + 200 - this.camera.position.y ) * .05;
+        this.camera.lookAt(this.scene.position);
 
-        renderer.render(scene, camera);
+        this.renderer.render(this.scene, this.camera);
     };
 
-    init();
+    this.init();
 
+};
+
+
+
+window.onload = function() {
+    const datVizualiser = new vizualiser();
+    let gui = new dat.GUI();
+    gui.add(datVizualiser, 'length', 200, 1000);
+    gui.add(datVizualiser, 'intensity', 0, 10);
 };
